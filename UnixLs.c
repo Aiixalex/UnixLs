@@ -4,7 +4,7 @@
 #include <dirent.h>
 #include <errno.h>
 
-void _ls (char* dir_name, bool op_a)
+void _ls (char* dir_name, int* ops_map)
 {
     DIR *dirp = opendir(dir_name);
     if (dirp == NULL)
@@ -18,7 +18,7 @@ void _ls (char* dir_name, bool op_a)
     while ((direntp = readdir(dirp)) != NULL) {
         char *filename = direntp->d_name;
 
-        if (!op_a && (filename[0] == '.')) { // hidden files
+        if (!ops_map['a'] && (filename[0] == '.')) { // hidden files
             continue;
         }
         
@@ -32,5 +32,27 @@ void _ls (char* dir_name, bool op_a)
 }
 
 int main (int argc, char* argv[]) {
-    _ls(argv[1], false);
+    int ops_map[128] = {0};
+
+    char* arg;
+    int i = 1;
+    while ((arg = argv[i]) != NULL)
+    {
+        if (arg[0] == '-')
+        {
+            int j=1;
+            while (arg[j] != '\0')
+            {
+                int op_ascii = arg[j];
+                ops_map[op_ascii] = true;
+                j++;
+            }
+        }
+        else
+        {
+            _ls(arg, ops_map);
+        }
+
+        i++;
+    }
 }
