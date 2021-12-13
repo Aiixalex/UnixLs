@@ -1,7 +1,7 @@
 TARGET = UnixLs
 OBJS = UnixLs.o
 
-CFLAGS = -Wall -g -std=c99 -D_POSIX_C_SOURCE=199309L
+CFLAGS = -Wall -g -std=c99 -D_POSIX_C_SOURCE=200112L
 CC = gcc
 
 all: clean $(TARGET)
