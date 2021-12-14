@@ -120,7 +120,7 @@ void _ls (char* dir_name, int* ops_map)
 
             //  print total size of file (bytes)
             off_t file_sz = file_stat.st_size;
-            printf ("%4ld ", file_sz);
+            printf ("%5ld ", file_sz);
 
             // print last modification time
             struct timespec mtim = file_stat.st_mtim;
